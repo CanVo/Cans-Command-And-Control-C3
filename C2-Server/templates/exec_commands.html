@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute Command</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .logging-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f8f8f8;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow: auto;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (event) {
+                event.preventDefault();  // Prevent default form submission
+                
+                var form = $(this);
+                var url = form.attr('action');
+                var formData = form.serialize();
+                
+                // Use AJAX to submit the form data
+                $.post(url, formData, function (response) {
+                    var output = response.output;
+                    $('#logOutput').append('<p>' + output + '</p>');  // Update log output
+                }, 'json');
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Execute Commands</h1>
+    <form action="/agents/execute" method="post">
+        <label for="agentIp">Agent IP:</label>
+        <input type="text" id="agentIp" name="agentIp" value="{{ agent_ip }}" readonly>
+        <br>
+        <label for="agentPort">Agent Port:</label>
+        <input type="text" id="agentPort" name="agentPort" value="{{ agent_port }}" readonly>
+        <br>
+        <label for="cmd">Command:</label>
+        <input type="text" id="cmd" name="cmd">
+        <br>
+        <input type="submit" value="Execute">
+    </form>
+
+    <div class="logging-box" id="logOutput"></div>
+</body>
+</html>

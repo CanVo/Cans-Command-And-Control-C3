@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute Command</title>
+</head>
+<body>
+    <h1>Execute Commands</h1>
+    <form action="/agents/execute" method="post">
+        <label for="agentIp">Agent IP:</label>
+        <input type="text" id="agentIp" name="agentIp" value="{{ agent_ip }}" readonly>
+        <br>
+        <label for="cmd">Command:</label>
+        <input type="text" id="cmd" name="cmd">
+        <br>
+        <input type="submit" value="Execute">
+    </form>
+</body>
+</html>

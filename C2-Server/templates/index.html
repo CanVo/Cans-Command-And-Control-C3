@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can's Command & Control (C3)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            color: #00FF00; /* Neon green color */
+            text-shadow: 0 0 10px #00FF00; /* Neon green glow effect */
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateTable() {
+            $.getJSON('/update-home', function(data) {
+                var tableBody = document.getElementById('table-body');
+                tableBody.innerHTML = ''; // Clear existing data
+                data.forEach(function(row) {
+                    var newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${row[0]}</td>
+                        <td>${row[1]}</td>
+                        <td>${row[2]}</td>
+                        <td>${row[3]}</td>
+                        <td>${row[4]}</td>
+                        <td><button onclick="redirectToExecCommand('${row[1]}', '${row[2]}')">Execute Command</button></td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+            });
+        }
+
+        function redirectToExecCommand(AGENT_IP, AGENT_PORT) {
+        window.location.href = `/agents/exec_command?agent_ip=${encodeURIComponent(AGENT_IP)}&agent_port=${encodeURIComponent(AGENT_PORT)}`;
+}
+        
+        setInterval(updateTable, 3000); // Update every 5 seconds
+    </script>
+</head>
+<body>
+    <h1>Can's Command & Control (C3)</h1>
+    <h2>Current Active C2 Agents</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>[ AGENT HASH ]</th>
+                <th>[ AGENT IP ]</th>
+                <th>[ AGENT PORT ]</th>
+                <th>[ AGENT OS ]</th>
+                <th>[ LAST CHECK TIME ]</th>
+                <th>[ OPTIONS ]</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Table rows will be inserted here -->
+        </tbody>
+    </table>
+</body>
+</html>
