@@ -1,5 +1,5 @@
 
-# Basic Command And Control (C2)
+# Can's Command And Control (C3)
 The repository includes a fundamental and simple Command and Control (C2) setup. My motivations and intentions for this were to gain an understanding of the workings of a C2 flow, learn the process of creating a suitable environment for it, and share this knowledge with friends and family.
 
 In its current state, to successfully create a connection between server and target, the following assumptions are in-place:
